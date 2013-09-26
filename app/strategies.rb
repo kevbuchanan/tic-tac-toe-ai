@@ -61,14 +61,12 @@ module Strategies
 
         def find_winning_move(game, piece)
           game.lines.each_with_index do |line, line_index|
-            return winning_space(piece, line, line_index, game.empty_space) if line.count(piece) == 2 && line.index(game.empty_space)
+            if line.count(piece) == 2 && line.index(game.empty_space)
+              space_index = line.index(game.empty_space)
+              return spot_number(line_index, space_index)
+            end
           end
           nil
-        end
-
-        def winning_space(piece, line, line_index, empty_space)
-          space_index = line.index(empty_space)
-          spot_number(line_index, space_index)
         end
       end
     end
