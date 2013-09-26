@@ -15,16 +15,7 @@ module Strategies
 
       class << self
         def next_move(game, piece)
-          winning_move(game, piece) || defensive_move(game, piece) || first_move(game) || strategic_move(game, piece)
-        end
-
-        def winning_move(game, piece)
-          find_winning_move(game, piece)
-        end
-
-        def defensive_move(game, piece)
-          other_piece = other_piece(game, piece)
-          find_winning_move(game, other_piece) if other_piece
+          first_move(game) || strategic_move(game, piece)
         end
 
         def first_move(game)
@@ -35,38 +26,32 @@ module Strategies
           game.board.scan(/[^#{piece}-]/).first
         end
 
-        def spot_number(line_index, space_index)
-          LINE_INDICES[line_index][space_index]
-        end
-
         def strategic_move(game, piece)
           lowest_line_score = 0
           move = nil
           game.lines.each_with_index do |line, line_index|
-            if line_score(line, piece, game) <= lowest_line_score && line.index(game.empty_space)
-              lowest_line_score = line_score(line, piece, game)
-              move = spot_number(line_index, optimal_index(line, game.empty_space))
+            line_score = calculate_line_score(line, piece, game)
+            space_index = optimal_space_index(line, game.empty_space)
+            if line_score == 2
+              return spot_number(line_index, space_index)
+            elsif line_score <= lowest_line_score && line.index(game.empty_space)
+              lowest_line_score = line_score
+              move = spot_number(line_index, space_index)
             end
           end
           move
         end
 
-        def line_score(line, piece, game)
+        def spot_number(line_index, space_index)
+          LINE_INDICES[line_index][space_index]
+        end
+
+        def calculate_line_score(line, piece, game)
           line.count(piece) - line.count(other_piece(game, piece))
         end
 
-        def optimal_index(line, empty_space)
+        def optimal_space_index(line, empty_space)
           line[1] == empty_space ? 1 : line.index(empty_space)
-        end
-
-        def find_winning_move(game, piece)
-          game.lines.each_with_index do |line, line_index|
-            if line.count(piece) == 2 && line.index(game.empty_space)
-              space_index = line.index(game.empty_space)
-              return spot_number(line_index, space_index)
-            end
-          end
-          nil
         end
       end
     end
