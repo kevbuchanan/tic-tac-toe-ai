@@ -4,15 +4,13 @@ describe Round do
   let(:human) { Player.new('X', Strategies::TicTacToe::Human) }
   let(:ai) { Player.new('O', Strategies::TicTacToe::KevinsAI) }
   let(:game) { TicTacToe.new }
-  let(:view) { TicTacToeView.new }
+  let(:view) { TicTacToeView.new(StringIO.new) }
   let(:round) { Round.new(game, view, human, ai) }
 
   before do
-    view.stub(:puts)
-    view.stub(:print)
     view.stub(:gets).and_return('')
     human.stub(:next_move).and_return(rand(0..8))
-    ai.stub(:next_move).and_return(rand(0..8))
+    round.stub(:save_game)
   end
 
   describe 'starting the round' do
