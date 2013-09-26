@@ -10,8 +10,8 @@ module Strategies
     end
 
     module KevinsAI
-      # Space indices by line: [row1, row2, row3, column1, column2, column3, diagonal1, diagonal2]
-      LINE_INDICES = [[0, 1, 2], [3, 4, 5], [6, 7, 8], [0, 3, 6], [1, 4, 7], [2, 5, 8], [0, 4, 8], [2, 4, 6]]
+      # Space indices by line: [diagonal2, diagonal1, column3, column2, column1, row3, row2, row1]
+      LINE_INDICES = [[2, 4, 6], [0, 4, 8], [2, 5, 8], [1, 4, 7], [0, 3, 6], [6, 7, 8], [3, 4, 5], [0, 1, 2]]
 
       class << self
         def next_move(game, piece)
@@ -27,19 +27,19 @@ module Strategies
         end
 
         def strategic_move(game, piece)
-          lowest_line_score = 0
-          move = nil
-          game.lines.each_with_index do |line, line_index|
-            line_score = calculate_line_score(line, piece, game)
-            space_index = optimal_space_index(line, game.empty_space)
-            if line_score == 2
-              return spot_number(line_index, space_index)
-            elsif line_score <= lowest_line_score && line.index(game.empty_space)
-              lowest_line_score = line_score
-              move = spot_number(line_index, space_index)
+          scores = line_scores(game, piece).reverse
+          [2, -2, scores.min].each do |score|
+            if scores.include?(score)
+              index = scores.index(score)
+              line = game.lines.reverse[index]
+              space = optimal_space_index(line, game.empty_space)
+              return spot_number(index, space)
             end
           end
-          move
+        end
+
+        def line_scores(game, piece)
+          game.lines.map { |line| calculate_line_score(line, piece, game) }
         end
 
         def spot_number(line_index, space_index)
@@ -47,6 +47,7 @@ module Strategies
         end
 
         def calculate_line_score(line, piece, game)
+          return 10 unless line.index(game.empty_space)
           line.count(piece) - line.count(other_piece(game, piece))
         end
 
