@@ -15,8 +15,11 @@ class Round
     @view.show_start(current_turn)
     until @game.winner || @game.draw?
       get_next_move(next_turn)
-      declare_winner(@game.winner) if @game.winner
-      declare_draw if @game.draw?
+      if @game.winner
+        declare_winner(@game.winner)
+      elsif @game.draw?
+        declare_draw
+      end
     end
   end
 
