@@ -55,9 +55,14 @@ describe Strategies::TicTacToe::KevinsAI do
         expect(subject.next_move(game, 'X')).to eq(0)
       end
 
-      it 'takes an edge space over a corner space' do
+      it 'takes an edge space over a corner space if opposite corners are taken' do
         @board = 'O---X---O'
         expect(subject.next_move(game, 'X')).to eq(5)
+      end
+
+      it 'takes a corner space if the opponent took the middle space' do
+        @board = '----O----'
+        expect(subject.next_move(game, 'X')).to eq(2)
       end
     end
   end
