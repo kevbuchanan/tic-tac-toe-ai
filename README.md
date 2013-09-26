@@ -23,6 +23,23 @@ The AI is located in the Strategies::TicTacToe::KevinsAI module.
 It progresses through taking a winning move, to a defensive move, to the first move, to a strategic move.
 The primary logic is located in the #strategic_move and #find_winning_move methods.
 
+## Structure
+
+The program has 5 main components, which can be found in the 'app' directory.
+
+- The TicTacToe class that serves as the game board and rules
+- The Player class, which keeps track of its game piece and gives the next move for the round
+- The Strategies module, to which a player delegates its next move, and includes a Human and AI strategy
+- The View class that displays output to the command line
+- The Round class that serves as a controller for the flow of the game
+
+## Spec
+
+You can run and see all specs by using:
+```
+  rspec spec --format documentation
+```
+
 ## Extras
 
-The Round and View classes were constructed such that they can be used with other board games with the same basic turn style of play. The extras folder includes an an additional board game that can be played through the board_game.rb file. This game uses the same Round object and inherits from the basic View object that was also used in tic tac toe.
+The Round and View classes were constructed such that they can be used with other board games with the same basic turn style of play. The 'extras' directory includes an an additional board game that can be played through the board_game.rb file. This game uses the same Round object and inherits from the basic View object that was also used in tic tac toe.
