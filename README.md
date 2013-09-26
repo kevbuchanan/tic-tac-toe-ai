@@ -20,8 +20,8 @@ The game progresses as follows:
 ## AI
 
 The AI is located in the Strategies::TicTacToe::KevinsAI module.
-It progresses through taking a winning move, to a defensive move, to the first move, to a strategic move.
-The primary logic is located in the #strategic_move and #find_winning_move methods.
+It progresses through taking the first move, to a winning move, to a defensive move, to a strategic move.
+The primary logic is located in the #strategic_move
 
 ## Structure
 
