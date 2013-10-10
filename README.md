@@ -28,8 +28,7 @@ The primary logic is located in the #strategic_move method. It progress through 
 The program has 5 main components, which can be found in the 'app' directory.
 
 - The TicTacToe class that serves as the game board and rules
-- The Player class, which keeps track of its game piece and gives the next move for the round
-- The Strategies module, to which a player delegates its next move, and includes a Human and AI strategy
+- The Strategies class, which acts as a player, and includes a Human and AI strategy
 - The View class that displays output to the command line
 - The Round class that serves as a controller for the flow of the game
 
