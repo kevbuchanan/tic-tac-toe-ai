@@ -13,19 +13,20 @@ class Round
 
   def start
     @view.show_start(current_turn)
-    until @game.winner || @game.draw?
-      get_next_move(next_turn)
+    until @game.over?
+      get_next_move(current_turn)
       if @game.winner
         declare_winner(@game.winner)
       elsif @game.draw?
         declare_draw
+      else
+        change_turn
       end
     end
   end
 
-  def next_turn
+  def change_turn
     @turn == 1 ? @turn = 0 : @turn = 1
-    current_turn
   end
 
   def current_turn
@@ -72,7 +73,7 @@ class Round
   def save_game
     record = YAML.load_file('record.yaml')
     if @winner
-      strategy_name = @winner.strategy.name.split('::').last
+      strategy_name = @winner.class.name.split('::').last
       record[strategy_name] ? record[strategy_name] += 1 : record[strategy_name] = 1
     else
       record['Draws'] += 1
