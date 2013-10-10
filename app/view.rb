@@ -13,7 +13,7 @@ class View
     clear_screen
     @output.puts player.piece + " wins the coin flip and goes first."
     @output.puts "Press enter to start."
-    sleep until !gets.chomp.nil?
+    gets.chomp
   end
 
   def show_turn(player)
@@ -47,7 +47,7 @@ end
 class TicTacToeView < View
   def print_board(game)
     clear_screen
-    game.board.split(//).each_with_index do |space, index|
+    game.board_string.split(//).each_with_index do |space, index|
       @output.print '| '
       space == game.empty_space ? (@output.print (index + 1).to_s.colorize(:green)) : (@output.print space.colorize(:red))
       @output.print ' '
