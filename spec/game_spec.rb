@@ -30,6 +30,12 @@ describe TicTacToe do
     end
   end
 
+  describe '#board_string' do
+    it 'returns a string representation of the board' do
+      expect(new_game.board_string).to eq('---------')
+    end
+  end
+
   describe '#make_move' do
     it 'sets the board space as the correct character' do
       new_game.make_move(0, 'X')
@@ -47,6 +53,20 @@ describe TicTacToe do
     context 'valid move' do
       it 'returns true' do
         expect(preset_game.valid_move?(0, 'O')).to be_true
+      end
+    end
+  end
+
+  describe '#over?' do
+    context 'the game is over' do
+      it 'returns true' do
+        expect(won_game.over?).to be_true
+      end
+    end
+
+    context 'the game is not over' do
+      it 'returns false' do
+        expect(new_game.over?).to be_false
       end
     end
   end
