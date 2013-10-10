@@ -8,16 +8,24 @@ class TicTacToe
     @empty_space = EMPTY_SPACE
   end
 
+  def board_string
+    @board
+  end
+
   def make_move(space, symbol)
     @board[space] = symbol
   end
 
   def valid_move?(space, symbol)
-    @board[space] == EMPTY_SPACE
+    space.is_a?(Fixnum) && @board[space] == EMPTY_SPACE
+  end
+
+  def over?
+    winner || draw?
   end
 
   def winner
-    lines.find do |line|
+    lines.each do |line|
       return line[0] if line.uniq.size == 1 && line[0] != EMPTY_SPACE
     end
     nil
