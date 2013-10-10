@@ -9,6 +9,10 @@ class Checkers
     @board = (pieces.first + EMPTY_SPACE * 9) * 2 + (pieces.last + EMPTY_SPACE * 9) * 2
   end
 
+  def board_string
+    @board
+  end
+
   def make_move(move, piece)
     from = move.first
     to = move.last
