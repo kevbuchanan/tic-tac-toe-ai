@@ -9,9 +9,30 @@ class View
     @output.puts "\e[H\e[2J"
   end
 
+  def ask_for_piece
+    clear_screen
+    @output.puts "Enter a character to use as your piece."
+    while character = gets.chomp
+      break if /^.$/.match(character)
+      @output.puts "Invalid input. Please enter one character and press enter."
+    end
+    character
+  end
+
+  def ask_for_order
+    clear_screen
+    @output.puts "Would you like to go first or second?"
+    @output.puts "Enter 1 for first, 2 for second, or nothing for random."
+    while choice = gets.chomp
+      break if /^[12]?$/.match(choice)
+      @output.puts "Invalid input. Please enter 1, 2, or nothing for random."
+    end
+    choice.empty? ? rand(1..2) : choice.to_i
+  end
+
   def show_start(player)
     clear_screen
-    @output.puts player.piece + " wins the coin flip and goes first."
+    @output.puts player.piece + " goes first."
     @output.puts "Press enter to start."
     gets.chomp
   end

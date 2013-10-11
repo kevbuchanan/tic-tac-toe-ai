@@ -3,12 +3,21 @@ require 'yaml'
 class Round
   attr_reader :winner
 
-  def initialize(game, view, *players)
+  def initialize(game, view, human, ai)
     @game = game
     @view = view
-    @players = players
-    @turn = [0, 1].sample
+    @players = [human, ai]
+    @turn = 0
     @winner = nil
+  end
+
+  def setup
+    user_piece = @view.ask_for_piece
+    @players.first.piece = user_piece
+    user_piece == 'X' ? ai_piece = 'O' : ai_piece = 'X'
+    @players.last.piece = ai_piece
+    @turn = @view.ask_for_order - 1
+    start
   end
 
   def start
