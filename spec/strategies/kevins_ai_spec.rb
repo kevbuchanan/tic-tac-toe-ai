@@ -1,23 +1,4 @@
-require_relative 'spec_helper'
-
-describe Strategies::TicTacToe::Human do
-  let(:human) { Strategies::TicTacToe::Human.new('X') }
-
-  describe '#next_move' do
-    before do
-      human.stub(:gets).and_return('2')
-    end
-
-    it 'takes input from the command line' do
-      expect(human).to receive(:gets)
-      human.next_move(double(:game))
-    end
-
-    it 'returns one less than the number passed from the command line' do
-      expect(human.next_move(double(:game))).to eq(1)
-    end
-  end
-end
+require_relative '../spec_helper'
 
 describe Strategies::TicTacToe::KevinsAI do
   let(:ai){ Strategies::TicTacToe::KevinsAI.new('X') }
@@ -54,7 +35,7 @@ describe Strategies::TicTacToe::KevinsAI do
   describe '#next_move' do
     context 'there is a winning move' do
       it 'takes the winning space' do
-        board = 'XX-------'
+        board = 'XX-----O-'
         expect(ai.next_move(new_game(board))).to eq(2)
       end
     end

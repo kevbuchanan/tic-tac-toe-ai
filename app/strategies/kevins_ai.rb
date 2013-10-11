@@ -1,25 +1,12 @@
 module Strategies
   module TicTacToe
-    class Human
-      attr_accessor :piece
-
-      def initialize(piece)
-        @piece = piece
-      end
-
-      def next_move(game)
-        space = gets.chomp
-        space =~ /^\d+$/ ? space.to_i - 1 : space
-      end
-    end
-
     class KevinsAI
       # Space indices by line: [diagonal2, diagonal1, column3, column2, column1, row3, row2, row1]
       LINE_INDICES = [[2, 4, 6], [0, 4, 8], [2, 5, 8], [1, 4, 7], [0, 3, 6], [6, 7, 8], [3, 4, 5], [0, 1, 2]]
 
       attr_accessor :piece
 
-      def initialize(piece)
+      def initialize(piece = 'X')
         @piece = piece
       end
 
@@ -36,7 +23,7 @@ module Strategies
       end
 
       def strategic_move(game)
-        return 0 if danger.match(game.board_string)
+        return 0 if danger(game)
         scores = line_scores(game).reverse
         [2, -2, scores.min].each do |score|
           if scores.include?(score)
@@ -65,8 +52,9 @@ module Strategies
         line[1] == empty_space ? 1 : line.index(empty_space)
       end
 
-      def danger
-        /(--OOX----)|(---OX---O)/
+      def danger(game)
+        boards = /(--#{other_piece(game) + other_piece(game) + piece}----)|(---#{other_piece(game) + piece}---#{other_piece(game)})/
+        boards.match(game.board_string)
       end
     end
   end
