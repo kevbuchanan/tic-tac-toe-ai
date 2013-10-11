@@ -25,6 +25,10 @@ class Checkers
     @board[move.first] == piece
   end
 
+  def over?
+    winner || draw?
+  end
+
   def winner
     @pieces.find do |piece|
       @board.scan(piece).empty?
