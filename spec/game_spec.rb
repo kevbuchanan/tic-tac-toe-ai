@@ -15,7 +15,7 @@ describe TicTacToe do
       end
 
       it 'assigns the board to @board' do
-        expect(preset_game.board).to eq(preset_board)
+        expect(preset_game.board_string).to eq(preset_board)
       end
     end
 
@@ -25,7 +25,7 @@ describe TicTacToe do
       end
 
       it 'assigns an empty board to @board' do
-        expect(new_game.board).to eq(new_board)
+        expect(new_game.board_string).to eq(new_board)
       end
     end
   end
@@ -39,7 +39,7 @@ describe TicTacToe do
   describe '#make_move' do
     it 'sets the board space as the correct character' do
       new_game.make_move(0, 'X')
-      expect(new_game.board[0]).to eq('X')
+      expect(new_game.board_string[0]).to eq('X')
     end
   end
 

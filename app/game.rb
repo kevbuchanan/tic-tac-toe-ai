@@ -1,5 +1,5 @@
 class TicTacToe
-  attr_reader :board, :empty_space
+  attr_reader :empty_space
 
   EMPTY_SPACE = '-'
 
