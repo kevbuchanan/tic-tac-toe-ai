@@ -41,4 +41,4 @@ You can run and see all specs by using:
 
 ## Extras
 
-The Round and View classes were constructed such that they can be used with other board games with the same basic turn style of play. The 'extras' directory includes an an additional board game that can be played through the board_game.rb file. This game uses the same Round object and inherits from the basic View object that was also used in tic tac toe.
+The Round and View classes were constructed such that they can be used with other board games with the same basic turn style of play. The 'extras' directory includes an additional board game that can be played through the board_game.rb file. This game uses the same Round object and inherits from the basic View object that was also used in tic tac toe.
